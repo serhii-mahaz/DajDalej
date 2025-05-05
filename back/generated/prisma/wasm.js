@@ -138,6 +138,32 @@ exports.Prisma.ItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TradeOfferScalarFieldEnum = {
+  id: 'id',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.TradeOfferItemScalarFieldEnum = {
+  id: 'id',
+  tradeOfferId: 'tradeOfferId',
+  itemId: 'itemId'
+};
+
+exports.Prisma.OfferProposalScalarFieldEnum = {
+  id: 'id',
+  tradeOfferId: 'tradeOfferId',
+  proposerId: 'proposerId',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ProposalItemScalarFieldEnum = {
+  id: 'id',
+  offerProposalId: 'offerProposalId',
+  itemId: 'itemId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -156,7 +182,11 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Item: 'Item'
+  Item: 'Item',
+  TradeOffer: 'TradeOffer',
+  TradeOfferItem: 'TradeOfferItem',
+  OfferProposal: 'OfferProposal',
+  ProposalItem: 'ProposalItem'
 };
 
 /**

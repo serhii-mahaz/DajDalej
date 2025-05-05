@@ -15,22 +15,62 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String?
-  image     String?
-  createdAt DateTime @default(now())
-
-  items     Item[]
+  id          String   @id @default(uuid())
+  email       String   @unique
+  name        String?
+  image       String?
+  createdAt   DateTime @default(now())
+  items       Item[]
+  tradeOffers TradeOffer[]
+  proposals   OfferProposal[]
 }
 
 model Item {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  imageUrl    String?
-  owner       User     @relation(fields: [ownerId], references: [id])
-  ownerId     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String         @id @default(cuid())
+  name           String
+  description    String?
+  imageUrl       String?
+  owner          User           @relation(fields: [ownerId], references: [id])
+  ownerId        String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  tradeOfferItem TradeOfferItem? @relation("ItemToTradeOfferItem")
+  proposalItem   ProposalItem?   @relation("ItemToProposalItem")
 }
+
+model TradeOffer {
+  id          String            @id @default(cuid())
+  owner       User              @relation(fields: [ownerId], references: [id])
+  ownerId     String
+  items       TradeOfferItem[]
+  proposals   OfferProposal[]
+  createdAt   DateTime          @default(now())
+}
+
+model TradeOfferItem {
+  id           String      @id @default(cuid())
+  tradeOffer   TradeOffer  @relation(fields: [tradeOfferId], references: [id])
+  tradeOfferId String
+  item         Item        @relation("ItemToTradeOfferItem", fields: [itemId], references: [id])
+  itemId       String      @unique
+}
+
+model OfferProposal {
+  id            String          @id @default(cuid())
+  tradeOffer    TradeOffer      @relation(fields: [tradeOfferId], references: [id])
+  tradeOfferId  String
+  proposer      User            @relation(fields: [proposerId], references: [id])
+  proposerId    String
+  items         ProposalItem[]
+  status        String          @default("pending")
+  createdAt     DateTime        @default(now())
+}
+
+model ProposalItem {
+  id              String         @id @default(cuid())
+  offerProposal   OfferProposal  @relation(fields: [offerProposalId], references: [id])
+  offerProposalId String
+  item            Item           @relation("ItemToProposalItem", fields: [itemId], references: [id])
+  itemId          String         @unique
+}
+
