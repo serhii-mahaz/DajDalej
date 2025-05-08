@@ -9,25 +9,21 @@ generator client {
   output   = "../generated/prisma"
 }
 
-generator zod {
-  provider = "prisma-zod-generator"
-  output   = "../src/zod"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id          String          @id @default(uuid())
-  email       String          @unique
-  name        String?
-  image       String?
-  createdAt   DateTime        @default(now())
-  items       Item[]
-  tradeOffers TradeOffer[]
-  proposals   OfferProposal[]
+  id           String          @id @default(uuid())
+  email        String          @unique
+  passwordHash String
+  name         String?
+  image        String?
+  createdAt    DateTime        @default(now())
+  items        Item[]
+  tradeOffers  TradeOffer[]
+  proposals    OfferProposal[]
 }
 
 model Item {

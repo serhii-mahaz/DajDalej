@@ -9,11 +9,6 @@ generator client {
   output   = "../generated/prisma"
 }
 
-generator zod {
-  provider = "prisma-zod-generator"
-  output   = "../src/zod"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -22,6 +17,7 @@ datasource db {
 model User {
   id          String   @id @default(uuid())
   email       String   @unique
+  passwordHash String
   name        String?
   image       String?
   createdAt   DateTime @default(now())
